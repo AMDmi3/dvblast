@@ -7,6 +7,7 @@ deltacast_inc := $(shell sh -c 'test -f /usr/include/StreamMaster.h && echo -n Y
 
 CFLAGS ?= -O3 -fomit-frame-pointer -g
 CFLAGS += -Wall -Wformat-security -Wno-strict-aliasing
+CFLAGS += `pkg-config --cflags libev`
 CFLAGS += -DVERSION=\"$(VERSION_MAJOR).$(VERSION_MINOR)\"
 CFLAGS += -DVERSION_MAJOR=$(VERSION_MAJOR)
 CFLAGS += -DVERSION_MINOR=$(VERSION_MINOR)
@@ -28,7 +29,7 @@ CFLAGS += -DHAVE_ASI_DELTACAST_SUPPORT
 LDLIBS += -lstreammaster
 endif
 
-LDLIBS_DVBLAST += -lpthread -lev
+LDLIBS_DVBLAST += -lpthread `pkg-config --libs libev`
 
 OBJ_DVBLAST = dvblast.o util.o dvb.o udp.o asi.o demux.o output.o en50221.o comm.o mrtg-cnt.o asi-deltacast.o
 OBJ_DVBLASTCTL = util.o dvblastctl.o
